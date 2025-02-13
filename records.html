@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payments - RFID Bill Payment System</title>
+    <link rel="stylesheet" href="assets/css/globals.css" />
+    <!-- Include Local Lucide Icons -->
+    <script src="assets/js/vendor/lucide.js"></script>
+  </head>
+  <body>
+    <div class="layout">
+      <!-- Use the navbar component -->
+      <app-navbar active-page="payments"></app-navbar>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="page-header">
+          <h2>Payments</h2>
+          <button class="add-payment">
+            <i data-lucide="plus-circle"></i>
+            <span>Record Payment</span>
+          </button>
+        </div>
+
+        <div class="content">
+          <!-- Search and Filter -->
+          <div class="toolbar">
+            <div class="search-box">
+              <i data-lucide="search"></i>
+              <input
+                type="text"
+                id="searchPayments"
+                placeholder="Search payments..."
+              />
+            </div>
+            <div class="filter-group">
+              <div class="date-range">
+                <input type="date" id="startDate" aria-label="Start date" />
+                <span>to</span>
+                <input type="date" id="endDate" aria-label="End date" />
+              </div>
+              <select id="paymentMethod" aria-label="Payment method">
+                <option value="">All Methods</option>
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+                <option value="Online">Online</option>
+              </select>
+              <button id="applyFilter" class="btn-filter">
+                <i data-lucide="filter"></i>
+                <span>Apply Filters</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Payments Table -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Payment ID</th>
+                  <th>Customer Name</th>
+                  <th>Amount Paid</th>
+                  <th>Payment Date</th>
+                  <th>Payment Method</th>
+                  <th>Billing Month/Year</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="paymentsList">
+                <!-- Dynamic content will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <button class="btn-page" id="prevPage">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <span id="pageInfo">Page 1 of 1</span>
+            <button class="btn-page" id="nextPage">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Record Payment</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="paymentForm">
+            <div class="form-group">
+              <label for="rfidInput">Scan RFID Card</label>
+              <input
+                type="text"
+                id="rfidInput"
+                placeholder="Place RFID card on scanner..."
+                autofocus
+              />
+            </div>
+
+            <div id="customerInfo" class="hidden">
+              <div class="customer-details">
+                <p><strong>Name:</strong> <span id="customerName"></span></p>
+                <p><strong>Plan:</strong> <span id="customerPlan"></span></p>
+                <p>
+                  <strong>Monthly Fee:</strong> <span id="customerFee"></span>
+                </p>
+                <p>
+                  <strong>Due Date:</strong> <span id="customerDueDate"></span>
+                </p>
+              </div>
+            </div>
+
+            <div id="paymentFields" class="hidden">
+              <div class="form-group">
+                <label for="billingMonth">Billing Month</label>
+                <input type="text" id="billingMonth" disabled />
+              </div>
+
+              <div class="form-group">
+                <label for="paymentAmount">Amount</label>
+                <input type="number" id="paymentAmount" step="0.01" disabled />
+              </div>
+
+              <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod" required>
+                  <option value="">Select payment method</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                  <option value="Online">Online</option>
+                </select>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn-secondary cancel-payment">
+                  Cancel
+                </button>
+                <button type="submit" class="btn-primary">
+                  Record Payment
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+      });
+    </script>
+    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/payments.js"></script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customers - RFID Bill Payment System</title>
+    <link rel="stylesheet" href="assets/css/globals.css" />
+    <!-- Include Local Lucide Icons -->
+    <script src="assets/js/vendor/lucide.js"></script>
+  </head>
+  <body>
+    <div class="layout">
+      <!-- Use the navbar component -->
+      <app-navbar active-page="customers"></app-navbar>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="page-header">
+          <h2>Customers</h2>
+          <button class="add-customer">
+            <i data-lucide="user-plus"></i>
+            <span>Add Customer</span>
+          </button>
+        </div>
+
+        <div class="content">
+          <!-- Search -->
+          <div class="toolbar">
+            <div class="search-box">
+              <i data-lucide="search"></i>
+              <input
+                type="text"
+                id="searchCustomer"
+                placeholder="Search by name, RFID, or contact number..."
+              />
+            </div>
+          </div>
+
+          <!-- Customers Table -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>RFID Number</th>
+                  <th>Name</th>
+                  <th>Contact Number</th>
+                  <th>Address</th>
+                  <th>Plan Type</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
+                  <th>Payment Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="customersList">
+                <!-- Dynamic content will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <button class="btn-page" id="prevPage">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <span id="pageInfo">Page 1 of 1</span>
+            <button class="btn-page" id="nextPage">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+      });
+    </script>
+    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/customers.js"></script>
+  </body>
+</html>

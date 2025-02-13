@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - RFID Bill Payment System</title>
+    <link rel="stylesheet" href="assets/css/globals.css" />
+    <!-- Include Local Lucide Icons -->
+    <script src="assets/js/vendor/lucide.js"></script>
+  </head>
+  <body>
+    <div class="layout">
+      <!-- Use the navbar component -->
+      <app-navbar active-page="dashboard"></app-navbar>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="page-header">
+          <h2>Dashboard</h2>
+        </div>
+
+        <div class="content">
+          <!-- Quick Search -->
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input
+              type="text"
+              id="quickSearch"
+              placeholder="Quick search customers..."
+            />
+          </div>
+
+          <!-- Quick Search Results -->
+          <div id="searchResults" class="search-results hidden">
+            <!-- Results will be dynamically inserted here -->
+          </div>
+
+          <!-- Summary Cards -->
+          <div class="summary-cards">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-info">
+                  <h3>Active Customers</h3>
+                  <p class="card-value" id="activeCustomers">0</p>
+                </div>
+                <div class="card-icon">
+                  <i data-lucide="users"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-content">
+                <div class="card-info">
+                  <h3>This Month's Revenue</h3>
+                  <p class="card-value" id="todayCollections">₱0.00</p>
+                </div>
+                <div class="card-icon">
+                  <i data-lucide="wallet"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-content">
+                <div class="card-info">
+                  <h3>Overdue Accounts</h3>
+                  <p class="card-value" id="overdueAccounts">0</p>
+                </div>
+                <div class="card-icon">
+                  <i data-lucide="alert-circle"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+      });
+    </script>
+    <script type="module" src="assets/js/main.js"></script>
+  </body>
+</html>
