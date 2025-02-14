@@ -7,8 +7,11 @@ class PaymentController {
             const page = parseInt(req.query.page) || 1;
             const limit = parseInt(req.query.limit) || 10;
             const search = req.query.search || '';
+            const filters = {
+                method: req.query.method || ''
+            };
 
-            const result = await Payment.getAllPayments(page, limit, search);
+            const result = await Payment.getAllPayments(page, limit, search, filters);
             res.json(result);
         } catch (error) {
             console.error('Error getting payments:', error);

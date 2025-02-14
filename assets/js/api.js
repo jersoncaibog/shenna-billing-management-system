@@ -8,7 +8,8 @@ class ApiService {
             limit: limit.toString(),
             ...(search && { search }),
             ...(filters.plan && { plan: filters.plan }),
-            ...(filters.status && { status: filters.status })
+            ...(filters.status && { status: filters.status }),
+            ...(filters.sortBy && { sortBy: filters.sortBy })
         });
 
         const response = await fetch(`${API_BASE_URL}/customers?${queryParams}`);
@@ -16,15 +17,29 @@ class ApiService {
         return response.json();
     }
 
-    static async getCustomerById(id) {
-        const response = await fetch(`${API_BASE_URL}/customers/${id}`);
-        if (!response.ok) throw new Error('Failed to fetch customer');
-        return response.json();
+    static async getCustomerById(customerId) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/customers/${customerId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch customer');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching customer:', error);
+            throw error;
+        }
     }
 
     static async getCustomerByRFID(rfid) {
         const response = await fetch(`${API_BASE_URL}/customers/rfid/${rfid}`);
-        if (!response.ok) throw new Error('Failed to fetch customer');
+        if (response.status === 404) {
+            // RFID not found - this is good for new customers
+            return null;
+        }
+        if (!response.ok) {
+            // Handle other errors
+            throw new Error('Failed to check RFID availability');
+        }
         return response.json();
     }
 
@@ -39,13 +54,24 @@ class ApiService {
     }
 
     static async updateCustomer(id, customerData) {
+        console.log('ApiService.updateCustomer called with:', { id, customerData });
         const response = await fetch(`${API_BASE_URL}/customers/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(customerData)
         });
-        if (!response.ok) throw new Error('Failed to update customer');
-        return response.json();
+        
+        console.log('Update response status:', response.status);
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Update failed:', errorData);
+            throw new Error(errorData.error || 'Failed to update customer');
+        }
+        
+        const updatedCustomer = await response.json();
+        console.log('Customer updated successfully:', updatedCustomer);
+        return updatedCustomer;
     }
 
     static async deleteCustomer(id) {
@@ -61,8 +87,6 @@ class ApiService {
             page: page.toString(),
             limit: limit.toString(),
             ...(search && { search }),
-            ...(filters.startDate && { startDate: filters.startDate }),
-            ...(filters.endDate && { endDate: filters.endDate }),
             ...(filters.method && { method: filters.method })
         });
 

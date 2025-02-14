@@ -107,10 +107,10 @@ function displaySearchResults(customers) {
             </div>
             
             <div class="search-result-actions">
-                <button class="btn-action" onclick="window.location.href='records.html?customer=${customer.customer_id}'">
+                <button class="btn-action" onclick="window.location.href='records.html?customer=${customer.customer_id}&search=${encodeURIComponent(customer.full_name)}'">
                     View Payments
                 </button>
-                <button class="btn-action" onclick="window.location.href='accounts.html?edit=${customer.customer_id}'">
+                <button class="btn-action" onclick="window.location.href='accounts.html?edit=${customer.customer_id}&search=${encodeURIComponent(customer.full_name)}'">
                     Edit Details
                 </button>
             </div>

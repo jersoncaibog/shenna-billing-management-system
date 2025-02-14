@@ -1,7 +1,7 @@
 const db = require('../config/database');
 
 class Payment {
-    static async getAllPayments(page = 1, limit = 10, search = '') {
+    static async getAllPayments(page = 1, limit = 10, search = '', filters = {}) {
         const offset = (page - 1) * limit;
         let baseQuery = `
             FROM payments p
@@ -13,6 +13,12 @@ class Payment {
         if (search) {
             baseQuery += ' AND (c.full_name LIKE ? OR c.rfid_number LIKE ?)';
             values.push(`%${search}%`, `%${search}%`);
+        }
+
+        // Add payment method filter
+        if (filters.method) {
+            baseQuery += ' AND p.payment_method = ?';
+            values.push(filters.method);
         }
 
         // Get total count for pagination
